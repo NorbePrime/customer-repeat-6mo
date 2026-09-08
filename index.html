@@ -40,7 +40,7 @@
 </head>
 <body>
   <h1>First-Purchase Cohort Explorer</h1>
-  <div class="sub">Customers whose first-ever purchase (earliest CloseDate) fell in the selected month, and how many made another purchase within 6 months. Source: dedicated <span class="pill">CustomerRepeat6mo</span> model (Salesforce Closed Won, selected products). <span style="color:var(--ink)">Data refreshed Aug 31, 2026.</span></div>
+  <div class="sub">Customers whose first-ever purchase (earliest CloseDate) fell in the selected month, and how many made another purchase within 6 months. Source: dedicated <span class="pill">CustomerRepeat6mo</span> model (Salesforce Closed Won, selected products). <span style="color:var(--ink)">Data refreshed Sep 8, 2026.</span></div>
 
   <div class="controls">
     <label for="month">Cohort month</label>
@@ -81,14 +81,14 @@ const muted="#9aa6bd", line="#2a3346";
 Chart.defaults.color=muted;
 Chart.defaults.font.family="-apple-system,Segoe UI,Roboto,sans-serif";
 
-// raw: [YM, cohort, b1..b6]  (b = first-repeat in month 1..6). Source: CustomerRepeat6mo. Refreshed Aug 31, 2026.
+// raw: [YM, cohort, b1..b6]  (b = first-repeat in month 1..6). Source: CustomerRepeat6mo. Refreshed Sep 8, 2026.
 const RAW=[
 ["2021-01",1165,447,32,5,6,0,1],["2021-02",1177,456,24,10,1,0,0],["2021-03",1306,546,30,3,1,3,0],["2021-04",1246,508,22,6,4,1,2],["2021-05",1176,508,30,4,1,2,0],["2021-06",1168,476,22,8,4,3,4],["2021-07",1119,499,22,2,3,1,4],["2021-08",1039,458,19,5,5,7,3],["2021-09",1103,463,16,9,5,7,3],["2021-10",1077,469,14,17,4,10,5],["2021-11",1092,477,21,13,4,3,3],["2021-12",1321,550,32,17,9,8,2],
 ["2022-01",1365,494,23,21,6,3,0],["2022-02",1425,458,63,6,8,3,5],["2022-03",1684,496,48,15,14,8,3],["2022-04",1540,427,47,19,10,4,3],["2022-05",1685,514,46,15,8,7,6],["2022-06",1587,539,47,12,4,7,7],["2022-07",1453,470,39,17,12,6,5],["2022-08",1825,585,63,19,11,13,14],["2022-09",1909,581,92,26,21,15,12],["2022-10",2315,662,121,32,22,13,19],["2022-11",2256,669,102,34,22,16,8],["2022-12",2573,705,79,24,21,7,5],
 ["2023-01",2474,683,84,18,8,8,6],["2023-02",2743,713,86,22,8,5,16],["2023-03",3008,778,48,12,5,11,14],["2023-04",2589,673,41,12,18,8,11],["2023-05",2609,652,53,25,15,11,9],["2023-06",2645,726,58,24,13,10,10],["2023-07",2673,711,83,21,13,8,12],["2023-08",2854,711,87,24,14,12,13],["2023-09",2804,744,77,26,26,11,12],["2023-10",2658,677,83,22,19,13,9],["2023-11",2227,661,55,25,14,11,8],["2023-12",1832,534,40,17,15,7,4],
 ["2024-01",2097,617,39,15,11,10,6],["2024-02",2245,633,46,16,9,9,12],["2024-03",2545,709,65,14,13,10,4],["2024-04",1975,527,56,24,7,6,4],["2024-05",2034,614,31,12,6,14,8],["2024-06",2008,733,35,13,8,8,7],["2024-07",2171,734,46,13,10,10,3],["2024-08",2050,729,34,12,11,9,17],["2024-09",2082,668,45,19,13,14,5],["2024-10",2169,747,35,11,12,4,10],["2024-11",1644,521,19,11,13,10,4],["2024-12",1872,573,31,19,13,6,7],
 ["2025-01",1929,535,28,15,10,7,6],["2025-02",1539,393,22,10,8,5,4],["2025-03",2207,575,36,17,11,8,4],["2025-04",1583,399,21,10,4,7,2],["2025-05",1874,445,27,15,10,9,6],["2025-06",1655,383,24,17,7,4,6],["2025-07",2087,449,33,9,9,9,5],["2025-08",2206,550,37,22,6,3,4],["2025-09",2062,531,43,20,2,8,7],["2025-10",2104,583,30,13,6,6,8],["2025-11",1902,562,33,9,10,2,1],["2025-12",2230,638,37,12,13,4,0],
-["2026-01",1804,411,48,14,7,10,6],["2026-02",1859,442,31,7,9,5,2],["2026-03",1957,489,20,10,4,1,1],["2026-04",1749,402,21,5,4,1,0],["2026-05",1814,455,27,6,0,0,0],["2026-06",1933,518,39,1,0,0,0],["2026-07",2084,620,23,0,0,0,0],["2026-08",2157,413,0,0,0,0,0]
+["2026-01",1804,411,48,14,7,10,6],["2026-02",1859,442,31,7,9,5,2],["2026-03",1957,489,20,10,4,1,3],["2026-04",1749,402,21,5,4,3,0],["2026-05",1814,455,27,6,2,0,0],["2026-06",1933,518,39,1,0,0,0],["2026-07",2084,620,34,1,0,0,0],["2026-08",2220,530,1,0,0,0,0],["2026-09",376,2,0,0,0,0,0]
 ];
 
 const MONTHNAMES=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -184,7 +184,7 @@ function render(){
   const mb=document.getElementById('maturity');
   if(!d.matured){
     mb.style.display='block';
-    mb.innerHTML=`⚠ <strong>${pretty(d.ym)} is still maturing.</strong> About ${d.elapsed} of 6 months have elapsed since this cohort's first purchases, so the repeat count (${d.repeats.toLocaleString()}) and rate (${d.rate}%) are incomplete and will rise as more time passes. Fully comparable cohorts run through Jan 2026.`;
+    mb.innerHTML=`⚠ <strong>${pretty(d.ym)} is still maturing.</strong> About ${d.elapsed} of 6 months have elapsed since this cohort's first purchases, so the repeat count (${d.repeats.toLocaleString()}) and rate (${d.rate}%) are incomplete and will rise as more time passes. Fully comparable cohorts run through Feb 2026.`;
   } else { mb.style.display='none'; }
 
   donut.data.datasets[0].data=[d.repeats,d.norepeat];donut.update();
