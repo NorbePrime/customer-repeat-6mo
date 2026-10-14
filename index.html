@@ -24,7 +24,7 @@
   .maturity{background:rgba(247,185,85,0.12);border:1px solid rgba(247,185,85,0.4);color:var(--warn);
     border-radius:9px;padding:9px 13px;font-size:12.5px;margin:0 0 18px;display:none;max-width:820px;line-height:1.5}
   .grid{display:grid;gap:16px}
-  .kpis{grid-template-columns:repeat(4,1fr)}
+  .kpis{grid-template-columns:repeat(5,1fr)}
   .row2{grid-template-columns:1fr 1fr;margin-top:16px}
   .full{margin-top:16px}
   .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
@@ -52,6 +52,7 @@
   <div class="grid kpis">
     <div class="card kpi"><div class="num" id="k_cohort" style="color:var(--accent)">—</div><div class="lab">First-time customers</div></div>
     <div class="card kpi"><div class="num" id="k_rep" style="color:var(--accent2)">—</div><div class="lab">Repeated within 6 months</div><div class="foot" id="k_rep_f">—</div></div>
+    <div class="card kpi"><div class="num" id="k_rep18" style="color:var(--accent2)">—</div><div class="lab">Repeated within 18 months</div><div class="foot" id="k_rep18_f">—</div></div>
     <div class="card kpi"><div class="num" id="k_norep" style="color:var(--warn)">—</div><div class="lab">No repeat within 6 months</div><div class="foot" id="k_norep_f" style="color:var(--muted)">—</div></div>
     <div class="card kpi"><div class="num" id="k_m1" style="color:var(--pink)">—</div><div class="lab">Of repeaters returned in month 1</div><div class="foot" id="k_m1_f" style="color:var(--muted)">—</div></div>
   </div>
@@ -241,6 +242,9 @@ function render(){
   document.getElementById('k_cohort').textContent=d.cohort.toLocaleString();
   document.getElementById('k_rep').textContent=d.repeats.toLocaleString();
   document.getElementById('k_rep_f').textContent=`${d.rate}% of cohort`+(d.matured?'':' so far');
+  const rate18=d.cohort?+(d.repeats18/d.cohort*100).toFixed(1):0;
+  document.getElementById('k_rep18').textContent=d.repeats18.toLocaleString();
+  document.getElementById('k_rep18_f').textContent=`${rate18}% of cohort`+(d.elapsed18>=18?'':' so far');
   document.getElementById('k_norep').textContent=d.norepeat.toLocaleString();
   document.getElementById('k_norep_f').textContent=`${(100-d.rate).toFixed(1)}% of cohort`;
   const m1pct=d.repeats?Math.round(d.buckets[0]/d.repeats*100):0;
