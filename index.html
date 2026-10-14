@@ -62,9 +62,9 @@
       <div class="chartwrap"><canvas id="donut"></canvas></div>
     </div>
     <div class="card">
-      <h2>Time to first repeat purchase &mdash; 18 months</h2>
+      <h2>Time to first repeat purchase &mdash; months 1&ndash;18</h2>
       <div class="chartwrap"><canvas id="bars"></canvas></div>
-      <div class="note">Of customers who repeated within 18 months, when their next purchase landed relative to the first. <span style="color:var(--muted)">Faded bars are months this cohort hasn't reached yet.</span> KPIs, donut and trend remain on the 6-month window.</div>
+      <div class="note">Customers who came back after their first purchase, by when their next purchase landed (the 0&ndash;1 month bucket is excluded to focus on later returns). <span style="color:var(--muted)">Faded bars are months this cohort hasn't reached yet.</span> KPIs, donut and trend remain on the 6-month window.</div>
     </div>
   </div>
 
@@ -201,11 +201,11 @@ const donut=new Chart(document.getElementById('donut'),{
 
 const bars=new Chart(document.getElementById('bars'),{
   type:'bar',
-  data:{labels:Array.from({length:18},(_,i)=>`${i}–${i+1} mo`),
-    datasets:[{label:'Customers',data:Array(18).fill(0),backgroundColor:Array(18).fill('#4f9dff'),borderRadius:4,maxBarThickness:34}]},
+  data:{labels:Array.from({length:17},(_,i)=>`${i+1}–${i+2} mo`),
+    datasets:[{label:'Customers',data:Array(17).fill(0),backgroundColor:Array(17).fill('#4f9dff'),borderRadius:4,maxBarThickness:34}]},
   options:{plugins:{legend:{display:false},
       tooltip:{callbacks:{label:c=>{const d=byYM[sel.value];
-        return ` ${c.parsed.y} customers (${d.repeats18?(c.parsed.y/d.repeats18*100).toFixed(1):0}% of 18-month repeaters)`;}}}},
+        return ` ${c.parsed.y} customers (${d.repeats18?(c.parsed.y/d.repeats18*100).toFixed(1):0}% of all 18-month repeaters)`;}}}},
     scales:{x:{grid:{display:false}},y:{beginAtZero:true,grid:{color:line}}}}
 });
 
@@ -254,9 +254,9 @@ function render(){
   } else { mb.style.display='none'; }
 
   donut.data.datasets[0].data=[d.repeats,d.norepeat];donut.update();
-  bars.data.datasets[0].data=d.buckets18.slice();
+  bars.data.datasets[0].data=d.buckets18.slice(1);   // skip the 0–1 month bucket
   // months beyond this cohort's elapsed time are still open: show them faded
-  bars.data.datasets[0].backgroundColor=d.buckets18.map((_,i)=>i<d.elapsed18?'#4f9dff':'rgba(79,157,255,0.28)');
+  bars.data.datasets[0].backgroundColor=d.buckets18.slice(1).map((_,i)=>i+1<d.elapsed18?'#4f9dff':'rgba(79,157,255,0.28)');
   bars.update();
 
   const idx=data.findIndex(x=>x.ym===d.ym);
